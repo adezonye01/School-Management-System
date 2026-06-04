@@ -16,7 +16,6 @@ import { Card, CardHeader } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Select } from '../components/ui/Select';
-import { Badge } from '../components/ui/Badge';
 import { Table, TableHead, TableBody, TableRow, TableCell } from '../components/ui/Table';
 import { Modal } from '../components/ui/Modal';
 import { useAcademicStore } from '../stores/academicStore';
@@ -46,10 +45,8 @@ export const Attendance: React.FC = () => {
     getSectionById,
   } = useAcademicStore();
   const { 
-    addAttendanceRecord,
     updateAttendanceRecord,
     getAttendanceByDate,
-    hasAttendanceForDate,
     bulkAddAttendance,
     getStudentAttendanceSummary,
   } = useAttendanceStore();
@@ -275,18 +272,6 @@ export const Attendance: React.FC = () => {
     a.download = `attendance-${grade?.code || 'grade'}-${section?.code || 'section'}-${selectedDate}.csv`;
     a.click();
     URL.revokeObjectURL(url);
-  };
-
-  // Get status badge variant
-  const getStatusBadge = (status: AttendanceStatus) => {
-    const variants: Record<AttendanceStatus, 'success' | 'danger' | 'warning' | 'info' | 'default'> = {
-      present: 'success',
-      absent: 'danger',
-      late: 'warning',
-      excused: 'info',
-      sick: 'default',
-    };
-    return variants[status];
   };
 
   // Summary stats
