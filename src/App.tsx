@@ -80,7 +80,6 @@ function App() {
           <Routes>
             {/* Public Routes */}
             <Route path="/login" element={<Login />} />
-            <Route path="/admission" element={<AdmissionForm />} />
 
             {/* Protected Routes */}
             <Route path="/" element={<MainLayout />}>
@@ -311,15 +310,6 @@ function App() {
                 element={
                   <ProtectedRoute moduleCode="students">
                     <Promotion />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="admission-review"
-                element={
-                  <ProtectedRoute moduleCode="students">
-                    <AdmissionReview />
                   </ProtectedRoute>
                 }
               />
