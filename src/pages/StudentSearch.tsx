@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import {
-  Search, User, BookOpen, DollarSign, Heart, Bus
+  Search, User, BookOpen, DollarSign, Heart, Bus, ClipboardCheck
 } from 'lucide-react';
 import { Card, CardHeader } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
@@ -12,12 +12,13 @@ import { useMarksStore } from '../stores/marksStore';
 import { useFeeStore } from '../stores/feeStore';
 import { useInvoiceStore } from '../stores/invoiceStore';
 import { usePart4Store } from '../stores/part4Store';
+import { useAttendanceStore } from '../stores/attendanceStore';
 import { useAppStore } from '../stores/appStore';
 import { useLocalizedValue } from '../hooks/useLocalizedValue';
 import type { EnhancedStudent } from '../types/database';
 import clsx from 'clsx';
 
-type TabType = 'info' | 'academic' | 'financial' | 'behavior' | 'transport';
+type TabType = 'info' | 'academic' | 'financial' | 'behavior' | 'attendance' | 'transport';
 
 export const StudentSearch: React.FC = () => {
   const { students, getEnhancedGradeById, getSectionById, subjectGradeMappings, getSubjectById, getEducationLevelById } = useAcademicStore();
@@ -25,6 +26,7 @@ export const StudentSearch: React.FC = () => {
   const { getTotalFeeAmountForGrade } = useFeeStore();
   const { getInvoicesByStudent, getPaymentsByStudent } = useInvoiceStore();
   const { getIncidentsByStudent, getStudentTotalPoints, getParentByStudentId, getStudentTransport, getBusesByBranch } = usePart4Store();
+  const { getStudentAttendanceSummary, getAttendanceByStudent } = useAttendanceStore();
   const { currentBranch, currentAcademicYear } = useAppStore();
   const { getLocalizedValue, language } = useLocalizedValue();
 
@@ -91,11 +93,20 @@ export const StudentSearch: React.FC = () => {
   const buses = currentBranch ? getBusesByBranch(currentBranch.id) : [];
   const studentBus = transport ? buses.find(b => b.id === transport.busId) : undefined;
 
+  // Attendance
+  const attendanceSummary = selectedStudent && currentAcademicYear 
+    ? getStudentAttendanceSummary(selectedStudent.id, currentAcademicYear.id) 
+    : null;
+  const attendanceRecords = selectedStudent && currentAcademicYear
+    ? getAttendanceByStudent(selectedStudent.id, currentAcademicYear.id)
+    : [];
+
   const tabs: { key: TabType; label: string; icon: React.ReactNode }[] = [
     { key: 'info', label: isAr ? 'البيانات الشخصية' : 'Personal Info', icon: <User className="w-4 h-4" /> },
     { key: 'academic', label: isAr ? 'الأكاديمي' : 'Academic', icon: <BookOpen className="w-4 h-4" /> },
     { key: 'financial', label: isAr ? 'المالي' : 'Financial', icon: <DollarSign className="w-4 h-4" /> },
     { key: 'behavior', label: isAr ? 'السلوك' : 'Behavior', icon: <Heart className="w-4 h-4" /> },
+    { key: 'attendance', label: isAr ? 'الحضور' : 'Attendance', icon: <ClipboardCheck className="w-4 h-4" /> },
     { key: 'transport', label: isAr ? 'المواصلات' : 'Transport', icon: <Bus className="w-4 h-4" /> },
   ];
 
@@ -315,6 +326,106 @@ export const StudentSearch: React.FC = () => {
                         </div>
                       </div>
                     ))}
+                  </div>
+                </Card>
+              )}
+            </div>
+          )}
+
+          {activeTab === 'attendance' && (
+            <div className="space-y-4">
+              {/* Attendance Summary Cards */}
+              <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+                <Card padding="sm">
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500">{isAr ? 'إجمالي الأيام' : 'Total Days'}</p>
+                    <p className="text-2xl font-bold">{attendanceSummary?.totalDays || 0}</p>
+                  </div>
+                </Card>
+                <Card padding="sm">
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500">{isAr ? 'حاضر' : 'Present'}</p>
+                    <p className="text-2xl font-bold text-green-600">{attendanceSummary?.presentDays || 0}</p>
+                  </div>
+                </Card>
+                <Card padding="sm">
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500">{isAr ? 'غائب' : 'Absent'}</p>
+                    <p className="text-2xl font-bold text-red-600">{attendanceSummary?.absentDays || 0}</p>
+                  </div>
+                </Card>
+                <Card padding="sm">
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500">{isAr ? 'متأخر' : 'Late'}</p>
+                    <p className="text-2xl font-bold text-yellow-600">{attendanceSummary?.lateDays || 0}</p>
+                  </div>
+                </Card>
+                <Card padding="sm">
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500">{isAr ? 'عذر' : 'Excused'}</p>
+                    <p className="text-2xl font-bold text-blue-600">{attendanceSummary?.excusedDays || 0}</p>
+                  </div>
+                </Card>
+                <Card padding="sm">
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500">{isAr ? 'نسبة الحضور' : 'Rate'}</p>
+                    <p className={clsx('text-2xl font-bold', (attendanceSummary?.attendanceRate || 0) >= 90 ? 'text-green-600' : (attendanceSummary?.attendanceRate || 0) >= 75 ? 'text-yellow-600' : 'text-red-600')}>
+                      {attendanceSummary?.attendanceRate?.toFixed(1) || 0}%
+                    </p>
+                  </div>
+                </Card>
+              </div>
+
+              {/* Attendance Records Table */}
+              {attendanceRecords.length > 0 ? (
+                <Card>
+                  <CardHeader title={isAr ? 'سجل الحضور' : 'Attendance Records'} />
+                  <div className="max-h-[400px] overflow-y-auto">
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell isHeader>{isAr ? 'التاريخ' : 'Date'}</TableCell>
+                          <TableCell isHeader className="text-center">{isAr ? 'الحالة' : 'Status'}</TableCell>
+                          <TableCell isHeader className="text-center">{isAr ? 'وقت الوصول' : 'Arrival'}</TableCell>
+                          <TableCell isHeader>{isAr ? 'ملاحظات' : 'Notes'}</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {attendanceRecords.slice(0, 50).map(record => {
+                          const statusLabels = {
+                            present: { ar: 'حاضر', en: 'Present', color: 'success' },
+                            absent: { ar: 'غائب', en: 'Absent', color: 'danger' },
+                            late: { ar: 'متأخر', en: 'Late', color: 'warning' },
+                            excused: { ar: 'عذر', en: 'Excused', color: 'info' },
+                            sick: { ar: 'مريض', en: 'Sick', color: 'default' },
+                          } as const;
+                          const statusInfo = statusLabels[record.status];
+                          return (
+                            <TableRow key={record.id}>
+                              <TableCell>
+                                <span className="font-medium">{new Date(record.date).toLocaleDateString(isAr ? 'ar-SA' : 'en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                              </TableCell>
+                              <TableCell className="text-center">
+                                <Badge variant={statusInfo.color}>{isAr ? statusInfo.ar : statusInfo.en}</Badge>
+                              </TableCell>
+                              <TableCell className="text-center">
+                                <span className="text-sm text-gray-500">{record.arrivalTime || '-'}</span>
+                              </TableCell>
+                              <TableCell>
+                                <span className="text-sm text-gray-500">{record.notes || record.excuseReason || '-'}</span>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </Card>
+              ) : (
+                <Card>
+                  <div className="text-center py-12">
+                    <ClipboardCheck className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                    <p className="text-gray-500">{isAr ? 'لا توجد سجلات حضور لهذا الطالب' : 'No attendance records for this student'}</p>
                   </div>
                 </Card>
               )}
