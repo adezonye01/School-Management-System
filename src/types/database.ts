@@ -771,6 +771,41 @@ export interface ReportCardSectionConfig {
   label?: LocalizedText;
 }
 
+// ========== ATTENDANCE MODULE ==========
+
+export type AttendanceStatus = 'present' | 'absent' | 'late' | 'excused' | 'sick';
+
+export interface AttendanceRecord {
+  id: string;
+  studentId: string;
+  sectionId: string;
+  gradeId: string;
+  academicYearId: string;
+  date: string;
+  status: AttendanceStatus;
+  arrivalTime?: string;
+  departureTime?: string;
+  notes?: string;
+  excuseReason?: string;
+  excuseDocument?: string;
+  recordedBy: string;
+  branchId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AttendanceSummary {
+  studentId: string;
+  academicYearId: string;
+  totalDays: number;
+  presentDays: number;
+  absentDays: number;
+  lateDays: number;
+  excusedDays: number;
+  sickDays: number;
+  attendanceRate: number;
+}
+
 // ========== ADMISSION PORTAL ==========
 
 export type AdmissionStatus = 'pending' | 'under_review' | 'approved' | 'rejected' | 'changes_requested' | 'enrolled';

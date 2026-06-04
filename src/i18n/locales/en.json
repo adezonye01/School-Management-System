@@ -97,7 +97,8 @@
     "studentAffairs": "Student Affairs",
     "schoolSettings": "School Settings",
     "behavior": "Behavior & Discipline",
-    "transport": "Transport & Zones"
+    "transport": "Transport & Zones",
+    "attendance": "Attendance"
   },
   "branches": {
     "title": "Branch Management",
@@ -563,5 +564,37 @@
     "totalPayments": "Total Payments",
     "totalDiscounts": "Total Discounts",
     "currentBalance": "Current Balance"
+  },
+  "attendance": {
+    "title": "Attendance",
+    "subtitle": "Record and manage daily student attendance",
+    "date": "Date",
+    "status": "Status",
+    "present": "Present",
+    "absent": "Absent",
+    "late": "Late",
+    "excused": "Excused",
+    "sick": "Sick",
+    "arrivalTime": "Arrival Time",
+    "departureTime": "Departure Time",
+    "notes": "Notes",
+    "excuseReason": "Excuse Reason",
+    "markAllAs": "Mark all as",
+    "saveAttendance": "Save Attendance",
+    "attendanceSaved": "Attendance saved successfully",
+    "totalStudents": "Total Students",
+    "presentCount": "Present Count",
+    "absentCount": "Absent Count",
+    "lateCount": "Late Count",
+    "attendanceRate": "Attendance Rate",
+    "studentDetails": "Student Attendance Details",
+    "totalDays": "Total Days",
+    "presentDays": "Present Days",
+    "absentDays": "Absent Days",
+    "lateDays": "Late Days",
+    "excusedDays": "Excused Days",
+    "sickDays": "Sick Days",
+    "noRecords": "No attendance records",
+    "selectFilters": "Please select education level, grade, and section"
   }
 }

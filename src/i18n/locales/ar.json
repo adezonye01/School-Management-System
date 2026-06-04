@@ -97,7 +97,8 @@
     "studentAffairs": "شؤون الطلاب",
     "schoolSettings": "إعدادات المدرسة",
     "behavior": "السلوكيات والإنذارات",
-    "transport": "المواصلات والمناطق"
+    "transport": "المواصلات والمناطق",
+    "attendance": "الحضور والغياب"
   },
   "branches": {
     "title": "إدارة الفروع",
@@ -339,7 +340,7 @@
     "fail": "راسب"
   },
   "examSeating": {
-    "title": "أرقام الجلوس",
+    "title": "أرقا�� الجلوس",
     "generateNumbers": "توليد أرقام الجلوس",
     "seatingNumber": "رقم الجلوس",
     "examPeriod": "فترة الاختبار",
@@ -603,5 +604,37 @@
     "description": "الوصف",
     "viewStatement": "عرض كشف الحساب",
     "downloadStatement": "تحميل الكشف"
+  },
+  "attendance": {
+    "title": "الحضور والغياب",
+    "subtitle": "تسجيل وإدارة حضور الطلاب اليومي",
+    "date": "التاريخ",
+    "status": "الحالة",
+    "present": "حاضر",
+    "absent": "غائب",
+    "late": "متأخر",
+    "excused": "عذر",
+    "sick": "مريض",
+    "arrivalTime": "وقت الوصول",
+    "departureTime": "وقت المغادرة",
+    "notes": "ملاحظات",
+    "excuseReason": "سبب العذر",
+    "markAllAs": "تعيين الكل",
+    "saveAttendance": "حفظ الحضور",
+    "attendanceSaved": "تم حفظ الحضور بنجاح",
+    "totalStudents": "إجمالي الطلاب",
+    "presentCount": "عدد الحاضرين",
+    "absentCount": "عدد الغائبين",
+    "lateCount": "عدد المتأخرين",
+    "attendanceRate": "نسبة الحضور",
+    "studentDetails": "تفاصيل حضور الطالب",
+    "totalDays": "إجمالي الأيام",
+    "presentDays": "أيام الحضور",
+    "absentDays": "أيام الغياب",
+    "lateDays": "أيام التأخير",
+    "excusedDays": "أيام العذر",
+    "sickDays": "أيام المرض",
+    "noRecords": "لا توجد سجلات حضور",
+    "selectFilters": "يرجى اختيار المرحلة التعليمية والصف والفصل"
   }
 }

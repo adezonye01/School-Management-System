@@ -36,6 +36,7 @@ import { Promotion } from './pages/Promotion';
 import { Reports } from './pages/Reports';
 import { SchoolSettings } from './pages/SchoolSettings';
 import { StudentSearch } from './pages/StudentSearch';
+import { Attendance } from './pages/Attendance';
 import { useAuthStore } from './stores/authStore';
 import { useAppStore } from './stores/appStore';
 
@@ -283,6 +284,15 @@ function App() {
                 element={
                   <ProtectedRoute moduleCode="students">
                     <BehaviorTracking />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="attendance"
+                element={
+                  <ProtectedRoute moduleCode="students">
+                    <Attendance />
                   </ProtectedRoute>
                 }
               />

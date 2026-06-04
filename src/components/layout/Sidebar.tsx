@@ -6,7 +6,7 @@ import {
   LayoutDashboard, Building2, Calendar, Users, Shield, GraduationCap,
   BookOpen, DollarSign, FileText, Settings, ClipboardList, ChevronDown,
   School, Layers, Link, Scale, Hash, Wallet, Receipt, CreditCard,
-  Bus, Heart, Search
+  Bus, Heart, Search, ClipboardCheck
 } from 'lucide-react';
 import { useAppStore } from '../../stores/appStore';
 import { useAuthStore } from '../../stores/authStore';
@@ -39,6 +39,7 @@ export const Sidebar: React.FC = () => {
       children: [
         { key: 'admissionReview', icon: <Users className="w-5 h-5" />, path: '/admission-review', permissionModule: 'students' },
         { key: 'students', icon: <Users className="w-5 h-5" />, path: '/students', permissionModule: 'students' },
+        { key: 'attendance', icon: <ClipboardCheck className="w-5 h-5" />, path: '/attendance', permissionModule: 'students' },
         { key: 'behavior', icon: <Heart className="w-5 h-5" />, path: '/behavior', permissionModule: 'students' },
         { key: 'transport', icon: <Bus className="w-5 h-5" />, path: '/transport', permissionModule: 'settings' },
       ],
