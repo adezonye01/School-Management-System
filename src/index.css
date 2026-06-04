@@ -1,0 +1,216 @@
+@import "tailwindcss";
+
+/* Custom Fonts */
+body {
+  font-family: 'Cairo', 'Inter', sans-serif;
+}
+
+[dir="ltr"] body {
+  font-family: 'Inter', 'Cairo', sans-serif;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Toast Animation */
+@keyframes slide-in-rtl {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-ltr {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+[dir="rtl"] .animate-slide-in {
+  animation: slide-in-rtl 0.3s ease-out;
+}
+
+[dir="ltr"] .animate-slide-in {
+  animation: slide-in-ltr 0.3s ease-out;
+}
+
+/* RTL Support */
+[dir="rtl"] .ps-64 {
+  padding-inline-start: 16rem;
+}
+
+[dir="rtl"] .ps-20 {
+  padding-inline-start: 5rem;
+}
+
+[dir="rtl"] .start-64 {
+  inset-inline-start: 16rem;
+}
+
+[dir="rtl"] .start-20 {
+  inset-inline-start: 5rem;
+}
+
+[dir="rtl"] .start-0 {
+  inset-inline-start: 0;
+}
+
+[dir="rtl"] .end-0 {
+  inset-inline-end: 0;
+}
+
+[dir="rtl"] .border-e {
+  border-inline-end-width: 1px;
+}
+
+[dir="rtl"] .border-s {
+  border-inline-start-width: 1px;
+}
+
+[dir="rtl"] .ms-1 {
+  margin-inline-start: 0.25rem;
+}
+
+[dir="rtl"] .ms-4 {
+  margin-inline-start: 1rem;
+}
+
+[dir="rtl"] .ps-3 {
+  padding-inline-start: 0.75rem;
+}
+
+[dir="rtl"] .ps-4 {
+  padding-inline-start: 1rem;
+}
+
+[dir="rtl"] .ps-10 {
+  padding-inline-start: 2.5rem;
+}
+
+[dir="rtl"] .ps-16 {
+  padding-inline-start: 4rem;
+}
+
+[dir="rtl"] .pe-3 {
+  padding-inline-end: 0.75rem;
+}
+
+[dir="rtl"] .pe-4 {
+  padding-inline-end: 1rem;
+}
+
+[dir="rtl"] .pe-10 {
+  padding-inline-end: 2.5rem;
+}
+
+[dir="rtl"] .text-start {
+  text-align: start;
+}
+
+[dir="rtl"] .text-end {
+  text-align: end;
+}
+
+/* Focus States */
+*:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Smooth Transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Button Reset for RTL */
+[dir="rtl"] button {
+  text-align: inherit;
+}
+
+/* Table RTL */
+[dir="rtl"] table {
+  direction: rtl;
+}
+
+[dir="rtl"] th,
+[dir="rtl"] td {
+  text-align: start;
+}
+
+/* Input placeholder styling */
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #6b7280;
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Additional RTL utilities that Tailwind might miss */
+[dir="rtl"] .rotate-180 {
+  transform: rotate(180deg);
+}
+
+[dir="rtl"] .space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] .gap-2 {
+  gap: 0.5rem;
+}
+
+[dir="rtl"] .gap-3 {
+  gap: 0.75rem;
+}
+
+[dir="rtl"] .gap-4 {
+  gap: 1rem;
+}
